@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { MainLayout } from './main-layout';
+import { Sidebar } from './sidebar';
 
-describe('MainLayout', () => {
-  let component: MainLayout;
-  let fixture: ComponentFixture<MainLayout>;
+describe('Sidebar', () => {
+  let component: Sidebar;
+  let fixture: ComponentFixture<Sidebar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainLayout],
+      imports: [Sidebar],
       providers: [provideRouter([])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MainLayout);
+    fixture = TestBed.createComponent(Sidebar);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
@@ -22,10 +22,9 @@ describe('MainLayout', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render sidebar and footer', () => {
+  it('should render navigation links', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.querySelector('app-sidebar')).toBeTruthy();
-    expect(compiled.querySelector('app-footer')).toBeTruthy();
+    expect(compiled.querySelectorAll('.navigation a').length).toBe(5);
   });
 });

@@ -3,6 +3,11 @@ import { Router, Routes } from '@angular/router';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { AuthLayoutService } from './layout/auth-layout/auth-layout.service';
+import { Appointments } from './features/appointments/appointments';
+import { Billing } from './features/billing/billing';
+import { Dashboard } from './features/dashboard/dashboard';
+import { Patients } from './features/patients/patients';
+import { Reports } from './features/reports/reports';
 
 export const routes: Routes = [
   {
@@ -27,7 +32,31 @@ export const routes: Routes = [
       },
     ],
     children: [
-      // TODO: Add child routes here
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard',
+      },
+      {
+        path: 'dashboard',
+        component: Dashboard,
+      },
+      {
+        path: 'patients',
+        component: Patients,
+      },
+      {
+        path: 'appointments',
+        component: Appointments,
+      },
+      {
+        path: 'reports',
+        component: Reports,
+      },
+      {
+        path: 'billing',
+        component: Billing,
+      },
     ],
   },
 ];
