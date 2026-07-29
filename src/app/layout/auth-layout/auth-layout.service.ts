@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 
 export interface LoginRequest {
   email: string;
@@ -29,7 +30,18 @@ interface ApiLoginResponse {
 })
 export class AuthLayoutService {
   private readonly loginApiUrl = 'http://127.0.0.1:8000/api/login';
+  private readonly logoutApiUrl = 'http://127.0.0.1:8000/api/logout';
+
   private readonly accessTokenKey = 'accessToken';
+  private readonly USER_KEY = 'currentUser';
+
+  private readonly router = inject(Router);
+
+  authState = signal({
+    user: null as LoginResponse['user'] | null,
+    isLoading: false,
+    isAuthenticated: false,
+  });
 
   constructor(private readonly http: HttpClient) {}
 
@@ -50,6 +62,16 @@ export class AuthLayoutService {
           },
         };
       }),
+      tap((response) => {
+        this.saveAccessToken(response.accessToken);
+        this.saveUser(response.user);
+
+        this.authState.set({
+          user: response.user,
+          isLoading: false,
+          isAuthenticated: true,
+        });
+      }),
       catchError((error: unknown) => {
         if (error instanceof HttpErrorResponse) {
           return throwError(() => new Error(this.getLoginErrorMessage(error)));
@@ -60,6 +82,17 @@ export class AuthLayoutService {
     );
   }
 
+  logout(): void {
+    try {
+      this.http.post(this.logoutApiUrl, {}).subscribe({
+        next: () => this.clearLocalSession(),
+        error: () => this.clearLocalSession(),
+      });
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }
+
   saveAccessToken(token: string): void {
     localStorage.setItem(this.accessTokenKey, token);
   }
@@ -68,8 +101,26 @@ export class AuthLayoutService {
     return localStorage.getItem(this.accessTokenKey);
   }
 
-  clearSession(): void {
+  saveUser(user: LoginResponse['user']): void {
+    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+  }
+
+  getUser(): LoginResponse['user'] | null {
+    const user = localStorage.getItem(this.USER_KEY);
+    return user ? JSON.parse(user) : null;
+  }
+
+  private clearLocalSession(): void {
     localStorage.removeItem(this.accessTokenKey);
+    localStorage.removeItem(this.USER_KEY);
+
+    this.authState.set({
+      user: null,
+      isLoading: false,
+      isAuthenticated: false,
+    });
+
+    void this.router.navigate(['/login']);
   }
 
   private getLoginErrorMessage(error: HttpErrorResponse): string {
@@ -78,7 +129,7 @@ export class AuthLayoutService {
     }
 
     if (error.status === 0) {
-      return 'Unable to reach the login API. Please check if the server is running.';
+      return 'Unable to reach the server. Please check if the Laravel API is running.';
     }
 
     return 'Login failed. Please try again.';

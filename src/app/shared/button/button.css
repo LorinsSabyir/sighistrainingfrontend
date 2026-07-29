@@ -1,0 +1,21 @@
+button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 1.2rem;
+  border: 0;
+  border-radius: 8px;
+  background: #147d76;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 750;
+}
+
+button:hover:not(:disabled) {
+  background: #0f6b65;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}

@@ -43,7 +43,7 @@ export class LoginForm {
         next: (response) => {
           this.authService.saveAccessToken(response.accessToken);
           this.successMessage.set('Login accepted. Redirecting...');
-          void this.router.navigate(['/']);
+          void this.router.navigate(['/dashboard']);
         },
         error: (error: Error) => {
           this.errorMessage.set(error.message || 'Login failed. Please try again.');

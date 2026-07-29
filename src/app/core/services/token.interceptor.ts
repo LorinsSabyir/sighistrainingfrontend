@@ -27,7 +27,6 @@ export const tokenInterceptor = (
   return next(authReq).pipe(
     catchError((error: unknown) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        authService.clearSession();
         void router.navigate(['/login'], {
           queryParams: { sessionExpired: 'true' },
         });

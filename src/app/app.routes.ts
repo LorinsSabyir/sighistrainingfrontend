@@ -8,6 +8,7 @@ import { Billing } from './features/billing/billing';
 import { Dashboard } from './features/dashboard/dashboard';
 import { Patients } from './features/patients/patients';
 import { Reports } from './features/reports/reports';
+import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -58,5 +59,9 @@ export const routes: Routes = [
         component: Billing,
       },
     ],
+  },
+  {
+    path: '**',
+    component: NotFound,
   },
 ];
