@@ -1,0 +1,25 @@
+<!-- LOGO AREA -->
+<div class="flex flex-col items-center">
+  <img
+    [src]="logoUrl"
+    alt="DavNor Logo"
+    class="w-44 h-44 object-contain shadow-2xl rounded-full border-4 border-gray-300 mb-6"
+  />
+
+  <div class="mb-4">
+    <h1 class="text-2xl font-bold text-[#2563EB]">Provincial Government of <br>Davao del Norte</h1>
+    <h2 class="text-3xl font-bold text-gray-700 mt-2">Supervisor Approval</h2>
+  </div>
+
+  <p class="text-gray-600 mb-8 max-w-xs">
+    Submit your Justifications, PTLOS, and Pass Slip where your supervisor approves or reject.
+  </p>
+
+  <div class="flex gap-6 text-sm text-gray-600">
+    <span *ngFor="let feature of features" class="flex items-center gap-2">
+      <span class="w-2 h-2 bg-[#2563EB] rounded-full"></span> {{ feature.name }}
+    </span>
+  </div>
+
+  <p class="text-xs text-gray-600 mt-12">© 2026 PGDDN. All rights reserved.</p>
+</div>
