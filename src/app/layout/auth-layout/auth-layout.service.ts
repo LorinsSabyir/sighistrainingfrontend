@@ -7,7 +7,7 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  token: string;
+  accessToken: string;
   user: {
     email: string;
     name: string;
@@ -17,7 +17,9 @@ export interface LoginResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class AuthApiService {
+export class AuthLayoutService {
+  private readonly accessTokenKey = 'accessToken';
+
   login(credentials: LoginRequest): Observable<LoginResponse> {
     const isAccepted =
       credentials.email === 'clinician@hospital.test' &&
@@ -30,11 +32,23 @@ export class AuthApiService {
     }
 
     return of({
-      token: 'dummy-jwt-token-replace-with-real-api-token',
+      accessToken: 'dummy-jwt-token-replace-with-real-api-token',
       user: {
         email: credentials.email,
         name: 'Clinical User',
       },
     }).pipe(delay(700));
+  }
+
+  saveAccessToken(token: string): void {
+    localStorage.setItem(this.accessTokenKey, token);
+  }
+
+  getAccessToken(): string | null {
+    return localStorage.getItem(this.accessTokenKey);
+  }
+
+  clearSession(): void {
+    localStorage.removeItem(this.accessTokenKey);
   }
 }

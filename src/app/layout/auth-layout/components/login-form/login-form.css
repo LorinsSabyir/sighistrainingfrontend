@@ -1,0 +1,98 @@
+:host {
+  display: block;
+  width: min(100%, 380px);
+}
+
+.login-card {
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid rgba(40, 118, 110, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 70px rgba(34, 99, 105, 0.14);
+}
+
+.form-kicker {
+  margin: 0 0 0.75rem;
+  color: #27766e;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0;
+  color: #17323a;
+  font-size: 1.85rem;
+  font-weight: 700;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  color: #304e54;
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+input {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid #c8dcdb;
+  border-radius: 8px;
+  outline: none;
+  background: #fbfefd;
+  color: #17323a;
+  font: inherit;
+}
+
+input:focus {
+  border-color: #178f87;
+  box-shadow: 0 0 0 4px rgba(23, 143, 135, 0.12);
+}
+
+.message {
+  margin: 1rem 0 0;
+  padding: 0.85rem 0.95rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.error {
+  border: 1px solid #f0c4c4;
+  background: #fff4f4;
+  color: #9d2626;
+}
+
+.success {
+  border: 1px solid #aedfca;
+  background: #effbf5;
+  color: #20694b;
+}
+
+button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 1.2rem;
+  border: 0;
+  border-radius: 8px;
+  background: #147d76;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 750;
+}
+
+button:hover:not(:disabled) {
+  background: #0f6b65;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}

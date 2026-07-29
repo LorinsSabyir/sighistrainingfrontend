@@ -19,4 +19,11 @@ describe('AuthLayout', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render the login experience', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('app-auth-brand')).toBeTruthy();
+    expect(compiled.querySelector('app-login-form')).toBeTruthy();
+  });
 });
