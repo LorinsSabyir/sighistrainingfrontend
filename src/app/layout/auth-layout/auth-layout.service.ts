@@ -88,6 +88,7 @@ export class AuthLayoutService {
         next: () => this.clearLocalSession(),
         error: () => this.clearLocalSession(),
       });
+      
     } catch (error) {
       console.error('Error during logout:', error);
     }
