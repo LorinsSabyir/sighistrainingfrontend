@@ -1,7 +1,241 @@
+@import "tailwindcss";
+
+:root {
+  /* ==========================================
+     PRIMARY BRAND
+  ========================================== */
+
+  --color-primary: #178f87;
+  --color-primary-hover: #147d76;
+  --color-primary-active: #0f6b65;
+  --color-primary-light: #e8f6f3;
+  --color-primary-border: #b7e4df;
+
+  /* ==========================================
+     SUCCESS
+  ========================================== */
+
+  --color-success: #16a34a;
+  --color-success-hover: #15803d;
+  --color-success-active: #166534;
+  --color-success-light: #dcfce7;
+  --color-success-border: #86efac;
+
+  /* ==========================================
+     DANGER
+  ========================================== */
+
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --color-danger-active: #991b1b;
+  --color-danger-light: #fee2e2;
+  --color-danger-border: #fca5a5;
+
+  /* ==========================================
+     WARNING
+  ========================================== */
+
+  --color-warning: #f59e0b;
+  --color-warning-hover: #d97706;
+  --color-warning-active: #b45309;
+  --color-warning-light: #fef3c7;
+  --color-warning-border: #fcd34d;
+
+  /* ==========================================
+     INFO
+  ========================================== */
+
+  --color-info: #2563eb;
+  --color-info-hover: #1d4ed8;
+  --color-info-active: #1e40af;
+  --color-info-light: #dbeafe;
+  --color-info-border: #93c5fd;
+
+  /* ==========================================
+     NEUTRAL / SECONDARY
+  ========================================== */
+
+  --color-secondary: #64748b;
+  --color-secondary-hover: #475569;
+  --color-secondary-active: #334155;
+  --color-secondary-light: #f1f5f9;
+  --color-secondary-border: #cbd5e1;
+
+  /* ==========================================
+     DISABLED
+  ========================================== */
+
+  --color-disabled-bg: #f1f5f9;
+  --color-disabled-text: #94a3b8;
+  --color-disabled-border: #d1d5db;
+
+  /* ==========================================
+     TEXT
+  ========================================== */
+
+  --color-text: #17323a;
+  --color-text-secondary: #516b70;
+  --color-text-muted: #94a3b8;
+  --color-text-white: #ffffff;
+
+  /* ==========================================
+     BACKGROUND
+  ========================================== */
+
+  --color-bg: #f6fbfa;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f8fafc;
+
+  /* ==========================================
+     BORDER
+  ========================================== */
+
+  --color-border: #d9e5e4;
+  --color-border-light: #edf2f2;
+
+  /* ==========================================
+     TABLE
+  ========================================== */
+
+  --table-header-bg: #f1f9f8;
+  --table-row-hover: #edf9f7;
+  --table-striped: #fafdfd;
+
+  /* ==========================================
+     INPUT
+  ========================================== */
+
+  --input-bg: #ffffff;
+  --input-border: #d9e5e4;
+  --input-focus: #178f87;
+  --input-placeholder: #94a3b8;
+
+  /* ==========================================
+     STATUS
+  ========================================== */
+
+  --status-online: #22c55e;
+  --status-offline: #9ca3af;
+  --status-pending: #f59e0b;
+  --status-error: #dc2626;
+
+  /* ==========================================
+     SHADOWS
+  ========================================== */
+
+  --shadow-sm: 0 2px 6px rgba(0,0,0,.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.08);
+  --shadow-lg: 0 18px 45px rgba(34,99,105,.12);
+}
+
+
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  height: 100dvh;
 }
+
+/* ===========================
+  ID Badge
+=========================== */
+
+.id_badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(39, 118, 110, 0.12);
+  color: #27766e;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+/* ===========================
+   Badge
+=========================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge.m {
+  background: #dceeff;
+  color: #1d63b5;
+}
+
+.badge.f {
+  background: #ffe5ef;
+  color: #c5427d;
+}
+
+/* ===========================
+   Button State
+=========================== */
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-primary:active {
+  background: var(--color-primary-active);
+}
+
+.btn-primary:disabled {
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+/* ===========================
+   Alert Colors
+=========================== */
+
+.alert-success {
+  background: var(--color-success-light);
+  border: 1px solid var(--color-success-border);
+  color: var(--color-success);
+}
+
+.alert-danger {
+  background: var(--color-danger-light);
+  border: 1px solid var(--color-danger-border);
+  color: var(--color-danger);
+}
+
+.alert-warning {
+  background: var(--color-warning-light);
+  border: 1px solid var(--color-warning-border);
+  color: var(--color-warning);
+}
+
+.alert-info {
+  background: var(--color-info-light);
+  border: 1px solid var(--color-info-border);
+  color: var(--color-info);
+}
+
+/* ===========================
+   Empty State
+=========================== */
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #7a8c90;
+}
+

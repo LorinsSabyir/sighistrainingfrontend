@@ -1,0 +1,65 @@
+<div class="table-container">
+
+  <table>
+
+    <thead>
+      <tr>
+
+        @for (column of columns(); track column.field) {
+
+          <th
+            [style.text-align]="column.align ?? 'left'"
+            [style.width]="column.width ?? null">
+
+            {{ column.header }}
+
+          </th>
+
+        }
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @if (rows().length === 0) {
+
+        <tr>
+
+          <td [attr.colspan]="columns().length" class="empty-state">
+            No records found.
+          </td>
+
+        </tr>
+
+      } @else {
+
+        @for (row of rows(); track $index) {
+
+          <tr>
+
+            @for (column of columns(); track column.field) {
+
+              <td [style.text-align]="column.align ?? 'left'">
+
+                <span [class]="column.class ?? ''">
+
+                  {{ row[column.field] }}
+
+                </span>
+
+              </td>
+
+            }
+
+          </tr>
+
+        }
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>

@@ -2,4 +2,32 @@
   <p>Patients</p>
   <h1>Patient records</h1>
   <span>This is a placeholder page for patient management.</span>
+
+  <div class="table-container">
+    @if (patients().length) {
+      <app-table
+        [columns]="columns"
+        [rows]="patients()">
+      </app-table>
+
+    } @else if (isLoading()) {
+
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+      
+    } @else if (error()) {
+
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+      
+    } @else {
+
+      <div class="empty-state">
+        No patients found.
+      </div>
+    }
+  </div>
+  
 </section>
