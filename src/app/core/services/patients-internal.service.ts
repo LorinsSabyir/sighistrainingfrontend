@@ -49,8 +49,8 @@ export interface Patient {
 @Injectable({
   providedIn: 'root',
 })
-export class PatientsExternalApiService {
-  private readonly apiUrl = 'http://127.0.0.1:8000/api/seg/patient';
+export class PatientsInternalService {
+  private readonly apiUrl = 'http://127.0.0.1:8000/api/patient/';
 
   constructor(private readonly http: HttpClient) {}
 

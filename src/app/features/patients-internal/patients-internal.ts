@@ -1,14 +1,14 @@
-import { Component, OnInit, signal  } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Patient, PatientsExternalApiService } from '../../core/services/patients-external-api.service';
 import { Table, TableColumn } from '../../shared/table/table';
 
 @Component({
-  selector: 'app-patients',
-  imports: [ Table],
-  templateUrl: './patients.html',
-  styleUrl: './patients.css',
+  selector: 'app-patients-internal',
+  imports: [Table],
+  templateUrl: './patients-internal.html',
+  styleUrl: './patients-internal.css',
 })
-export class Patients implements OnInit {
+export class PatientsInternal implements OnInit {
   readonly patients = signal<Patient[]>([]);
   readonly isLoading = signal(false);
   readonly error = signal<string | null>(null);
@@ -78,5 +78,4 @@ export class Patients implements OnInit {
     }
 
   ];
-
 }
