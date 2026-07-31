@@ -1,1 +1,8 @@
-<button class="button" (click)="buttonClicked()">{{ button_text }}</button>
+<button
+  type="button"
+  class="app-button rounded-md px-4 py-2 text-sm font-medium transition"
+  (click)="buttonClicked()"
+  [class]="buttonClasses"
+>
+  {{ button_text }}
+</button>

@@ -3,6 +3,19 @@
   <h1>Patient records</h1>
   <span>This is a placeholder page for patient management.</span>
 
+  <!-- patient-list.html -->
+  <app-button button_text="Create new Patient" (buttonClick)="openCreateModal()"></app-button>
+
+  <app-modal-form
+    [isOpen]="isModalOpen()"
+    [title]="editingPatient() ? 'Edit Patient' : 'New Patient'"
+    [fields]="patientFields"
+    [initialValue]="editingPatient()"
+    [submitLabel]="editingPatient() ? 'Update' : 'Create'"
+    (closed)="isModalOpen.set(false)"
+    (submitted)="onModalSubmit($event)"
+  />
+
   <div class="table-container">
     @if (patients().length) {
       <app-table

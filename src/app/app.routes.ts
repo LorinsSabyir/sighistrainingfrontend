@@ -9,6 +9,7 @@ import { Dashboard } from './features/dashboard/dashboard';
 import { Patients } from './features/patients/patients';
 import { Reports } from './features/reports/reports';
 import { NotFound } from './features/not-found/not-found';
+import { PatientsInternal } from './features/patients-internal/patients-internal';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: Dashboard,
+      },
+      {
+        path: 'patients internal',
+        component: PatientsInternal,
       },
       {
         path: 'patients',

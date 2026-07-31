@@ -12,7 +12,8 @@ import { AuthLayoutService } from '../../../auth-layout/auth-layout.service';
 export class Sidebar {
   protected readonly navigationItems = [
     { label: 'Dashboard', route: '/dashboard', icon: 'D' },
-    { label: 'Patients', route: '/patients', icon: 'P' },
+    { label: 'Patients Internal', route: '/patients internal', icon: 'PI' },
+    { label: 'Patients External', route: '/patients', icon: 'PE' },
     { label: 'Appointments', route: '/appointments', icon: 'A' },
     { label: 'Reports', route: '/reports', icon: 'R' },
     { label: 'Billing', route: '/billing', icon: 'B' },

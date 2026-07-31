@@ -1,0 +1,65 @@
+<!-- form-modal.component.html -->
+@if (isOpen()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" (click)="onClose()">
+    <div
+      class="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-lg bg-white p-6 shadow-lg"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-gray-800">{{ title() }}</h2>
+        <button type="button" class="text-gray-400 hover:text-gray-600" (click)="onClose()">✕</button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+        @for (field of fields(); track field.key) {
+          <div>
+            <label class="mb-1 block text-sm font-medium text-gray-700">
+              {{ field.label }}
+              @if (field.required) {
+                <span class="text-red-500">*</span>
+              }
+            </label>
+
+            @switch (field.type) {
+              @case ('textarea') {
+                <textarea
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder ?? ''"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
+                ></textarea>
+              }
+              @case ('select') {
+                <select
+                  [formControlName]="field.key"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
+                >
+                  <option value="" disabled>Select {{ field.label }}</option>
+                  @for (opt of field.options; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              }
+              @default {
+                <input
+                  [type]="field.type ?? 'text'"
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder ?? ''"
+                  class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              }
+            }
+
+            @if (hasError(field.key)) {
+              <p class="mt-1 text-xs text-red-500">{{ field.label }} is required.</p>
+            }
+          </div>
+        }
+
+        <div class="flex justify-end gap-2 pt-2">
+          <app-button button_text="Cancel" variant="danger" (buttonClick)="onClose()"></app-button>
+          <app-button button_text="Save" (buttonClick)="onSubmit()" ></app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

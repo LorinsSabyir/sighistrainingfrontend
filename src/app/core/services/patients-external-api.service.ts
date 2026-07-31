@@ -2,48 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+// patient.model.ts
 export interface Patient {
-  pid: string;
-  dateRegistered: string;
-
-  name_last: string;
+  pid?: string;
+  date_registered?: string;
   name_first: string;
-  name_middle: string;
-
-  date_birth: string;
-  age: string;
+  name_last: string;
+  name_middle?: string;
+  name_suffix?: string;
+  phone_number?: string;
+  blood_group?: string;
+  date_of_birth?: string;
   sex: string;
-  civil_status: string;
-
-  place_birth: string;
-
-  Street1: string;
-  Barangay: string;
-  City: string;
-  Province: string;
-  Country: string;
-  ZipCode: string;
-
-  ethnic: string;
-  religion: string;
-
-  MotherOfPatient: string | null;
-  FatherOfPatient: string | null;
-  SpouseOfPatient: string | null;
-
-  deathdate: string;
-
-  brgy_code: string;
-  brgy_code_10: string | null;
-
-  municity_code: string;
-  municity_code_10: string | null;
-
-  province_code: string;
-  province_code_10: string | null;
-
-  region_code: string;
-  region_code_10: string | null;
+  age?: string;
+  civil_status?: string;
+  place_of_birth?: string;
+  religion?: string;
+  ethnicity?: string;
+  address_street?: string;
+  address_brgy?: string;
+  address_city?: string;
+  address_province?: string;
+  address_country?: string;
+  address_zipcode?: string;
+  patient_mother_name?: string;
+  patient_father_name?: string;
+  patient_guardian_name?: string;
+  patient_guardian_relationship?: string;
+  patient_spouse_name?: string;
 }
 
 @Injectable({
@@ -71,7 +57,7 @@ export class PatientsExternalApiService {
   /**
    * GET /api/seg/patient/{id}
    */
-  getPatientsByDepartment(id: number): Observable<Patient[]> {
+  getPatientsById(id: number): Observable<Patient[]> {
     return this.http.get<Patient[]>(
       `${this.apiUrl}/${id}`
     );
