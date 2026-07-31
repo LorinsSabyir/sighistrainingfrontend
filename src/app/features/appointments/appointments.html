@@ -1,5 +1,57 @@
 <section class="placeholder-page">
   <p>Appointments</p>
-  <h1>Care schedule</h1>
-  <span>This is a placeholder page for appointments and clinical scheduling.</span>
+  <h1>Patient Appointments</h1>
+  <span>Manage patient encounters and appointments.</span>
+
+  <div class="flex items-center justify-between mb-6">
+    <!-- <app-search-bar (searched)="onSearch($event)"> </app-search-bar> -->
+<!-- 
+    <app-button button_text="Create Appointment" (buttonClick)="openCreateModal()"> </app-button> -->
+  </div>
+
+  <app-modal-form
+    [isOpen]="isModalOpen()"
+    [title]="editingEncounter() ? 'Edit Appointment' : 'New Appointment'"
+    [fields]="encounterFields"
+    [initialValue]="editingEncounter()"
+    [submitLabel]="editingEncounter() ? 'Update' : 'Create'"
+    (closed)="isModalOpen.set(false)"
+    (submitted)="onModalSubmit($event)"
+  />
+
+  <div class="table-container">
+    @if (encounters().length) {
+      <app-table [columns]="columns" [rows]="encounters()">
+        <ng-template appTableCell="actions" let-encounter>
+          <div class="flex justify-end gap-2">
+            <app-button
+              icon="edit"
+              variant="info"
+              [iconOnly]="true"
+              (buttonClick)="openEditModal(encounter)"
+            >
+            </app-button>
+
+            <app-button
+              icon="delete"
+              variant="danger"
+              [iconOnly]="true"
+              (buttonClick)="onDeleteEncounter(encounter)"
+            >
+            </app-button>
+          </div>
+        </ng-template>
+      </app-table>
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">No appointments found.</div>
+    }
+  </div>
 </section>

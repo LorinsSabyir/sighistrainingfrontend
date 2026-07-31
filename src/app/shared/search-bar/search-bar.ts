@@ -1,56 +1,31 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Button } from "../button/button";
 
-export type SearchType = 'id' | 'pid' | 'name';
-
-export interface SearchEvent {
-  type: SearchType;
-  id?: number;
-  pid?: string;
-  lastName?: string;
-  firstName?: string;
+export interface SearchField {
+  key: string;
+  label: string;
+  type?: 'text' | 'number' | 'date';
+  placeholder?: string;
 }
 
 @Component({
   selector: 'app-search-bar',
-  imports: [FormsModule],
+  imports: [FormsModule, Button],
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css',
 })
 export class SearchBar {
-  searchType = signal<SearchType>('pid');
+  searched = output<string>();
 
-  pidValue = signal('');
-  lastNameValue = signal('');
-  firstNameValue = signal('');
+  query = signal('');
 
-  searched = output<SearchEvent>();
-
-  onSearchTypeChange(type: SearchType): void {
-    this.searchType.set(type);
+  onSubmit() {
+    this.searched.emit(this.query().trim());
   }
 
-  // TODO:
-  // onClearSearch(): void {
-  //   this.pidValue = "";
-  // }
-
-  onSubmit(): void {
-    const type = this.searchType();
-
-    if (type === 'pid') {
-      if (!this.pidValue().trim()) return;
-      this.searched.emit({ type: 'pid', pid: this.pidValue().trim() });
-      return;
-    }
-
-    if (type === 'name') {
-      if (!this.lastNameValue().trim() && !this.firstNameValue().trim()) return;
-      this.searched.emit({
-        type: 'name',
-        lastName: this.lastNameValue().trim(),
-        firstName: this.firstNameValue().trim(),
-      });
-    }
+  clear(): void {
+    this.query.set('');
+    this.searched.emit('');
   }
 }

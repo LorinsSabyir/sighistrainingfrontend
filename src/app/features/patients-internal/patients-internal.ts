@@ -3,7 +3,7 @@ import { Table, TableColumn, TableCellDef  } from '../../shared/table/table';
 import { Patient, PatientsInternalService } from '../../core/services/patients-internal.service';
 import { FormFieldConfig, ModalForm } from '../../shared/modal-form/modal-form';
 import { Button } from "../../shared/button/button";
-import { SearchBar, SearchEvent } from '../../shared/search-bar/search-bar';
+import { SearchBar, SearchField  } from '../../shared/search-bar/search-bar';
 
 @Component({
   selector: 'app-patients-internal',
@@ -71,12 +71,6 @@ export class PatientsInternal implements OnInit {
       error: (err) => console.error('Delete failed:', err),
     });
   }
-  
-  onCreateAppointment(patient: Patient): void {
-    // TODO: not built yet — where should this navigate/open to?
-    console.log('Create appointment for', patient.pid);
-  }
-
 
   // --------- Table ---------- 
   columns: TableColumn[] = [
@@ -128,7 +122,7 @@ export class PatientsInternal implements OnInit {
 
   ];
 
-  // ---------- Modal ----------
+  // ---------- Create & Edit Patient Modal ----------
   isModalOpen = signal(false);
   editingPatient = signal<Patient | null>(null);
 
@@ -209,26 +203,33 @@ export class PatientsInternal implements OnInit {
   }
 
   // ---------- Search Bar ----------
-  onSearch(event: SearchEvent): void {
+  onSearch(query: string): void {
+
     this.isLoading.set(true);
     this.error.set(null);
   
-    switch (event.type) {
+    this.patientService.searchPatients(query).subscribe({
   
-      case 'pid':
-        this.patientService.getPatientByPid(event.pid!).subscribe({
-          next: (result) => { this.patients.set([result]); this.isLoading.set(false); },
-          error: (err) => { this.error.set('Patient not found.'); this.isLoading.set(false); console.error(err); },
-        });
-        break;
+      next: (patients) => {
+        this.patients.set(patients);
+        this.isLoading.set(false);
+      },
   
-      case 'name':
-        this.patientService.searchPatient(event.lastName ?? '', event.firstName ?? '').subscribe({
-          next: (results) => { this.patients.set(results); this.isLoading.set(false); },
-          error: (err) => { this.error.set('Search failed.'); this.isLoading.set(false); console.error(err); },
-        });
-        break;
-    }
+      error: (err) => {
+        this.error.set('Search failed.');
+        this.isLoading.set(false);
+        console.error(err);
+      }
+  
+    });
+  
+  }
+
+
+  // ---------- Create Appointment Modal ----------
+  onCreateAppointment(patient: Patient): void {
+    // TODO: not built yet — where should this navigate/open to?
+    console.log('Create appointment for', patient.pid);
   }
 
 }

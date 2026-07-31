@@ -94,4 +94,14 @@ export class PatientsInternalService {
   deletePatient(id: number): Observable<Patient> {
     return this.http.delete<Patient>(`${this.apiUrl}/delete/${id}`);
   }
+
+  /**
+   * Search specific patient depending on their pid, name_first, name_last, name_middle, phone_number, address_city
+   * Maps to: PUT /search
+   */
+  searchPatients(query: string): Observable<Patient[]> {
+    return this.http.get<Patient[]>(
+      `${this.apiUrl}/search?q=${encodeURIComponent(query)}`
+    );
+  }
 }

@@ -4,8 +4,8 @@
   <span>This is a placeholder page for patient management.</span>
 
   <div class="flex items-center justify-between mb-6">
-    <app-search-bar (searched)="onSearch($event)" />
-  
+    <app-search-bar (searched)="onSearch($event)"> </app-search-bar>
+
     <app-button button_text="Create new Patient" (buttonClick)="openCreateModal()"></app-button>
   </div>
 
@@ -22,35 +22,39 @@
   <div class="table-container">
     @if (patients().length) {
       <app-table [columns]="columns" [rows]="patients()">
-
-
         <ng-template appTableCell="actions" let-patient>
           <div class="flex justify-end gap-2">
-            <app-button icon="edit" variant="info" [iconOnly]="true" (buttonClick)="openEditModal(patient)" />
-            <app-button icon="calendar_month" variant="success" [iconOnly]="true" (buttonClick)="onCreateAppointment(patient)" />
-            <app-button icon="delete" variant="danger" [iconOnly]="true" (buttonClick)="onDeletePatient(patient)" />
+            <app-button
+              icon="edit"
+              variant="info"
+              [iconOnly]="true"
+              (buttonClick)="openEditModal(patient)"
+            />
+            <app-button
+              icon="calendar_month"
+              variant="success"
+              [iconOnly]="true"
+              (buttonClick)="onCreateAppointment(patient)"
+            />
+            <app-button
+              icon="delete"
+              variant="danger"
+              [iconOnly]="true"
+              (buttonClick)="onDeletePatient(patient)"
+            />
           </div>
         </ng-template>
       </app-table>
-
     } @else if (isLoading()) {
-
       <div class="empty-state">
         <p>Loading...</p>
       </div>
-      
     } @else if (error()) {
-
       <div class="empty-state">
         <p>{{ error() }}</p>
       </div>
-      
     } @else {
-
-      <div class="empty-state">
-        No patients found.
-      </div>
+      <div class="empty-state">No patients found.</div>
     }
   </div>
-  
 </section>
