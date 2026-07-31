@@ -1,8 +1,16 @@
 <button
   type="button"
-  class="app-button rounded-md px-4 py-2 text-sm font-medium transition"
-  (click)="buttonClicked()"
+  class="app-button flex items-center justify-center gap-2 rounded-md text-sm font-medium transition"
   [class]="buttonClasses"
+  [class.app-button--icon-only]="iconOnly"
+  [disabled]="disabled"
+  (click)="buttonClicked()"
 >
-  {{ button_text }}
+  @if (icon) {
+    <mat-icon>{{ icon }}</mat-icon>
+  }
+
+  @if (!iconOnly && button_text) {
+    <span>{{ button_text }}</span>
+  }
 </button>

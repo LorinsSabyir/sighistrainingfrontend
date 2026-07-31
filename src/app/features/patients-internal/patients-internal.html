@@ -3,8 +3,11 @@
   <h1>Patient records</h1>
   <span>This is a placeholder page for patient management.</span>
 
-  <!-- patient-list.html -->
-  <app-button button_text="Create new Patient" (buttonClick)="openCreateModal()"></app-button>
+  <div class="flex items-center justify-between mb-6">
+    <app-search-bar (searched)="onSearch($event)" />
+  
+    <app-button button_text="Create new Patient" (buttonClick)="openCreateModal()"></app-button>
+  </div>
 
   <app-modal-form
     [isOpen]="isModalOpen()"
@@ -18,9 +21,16 @@
 
   <div class="table-container">
     @if (patients().length) {
-      <app-table
-        [columns]="columns"
-        [rows]="patients()">
+      <app-table [columns]="columns" [rows]="patients()">
+
+
+        <ng-template appTableCell="actions" let-patient>
+          <div class="flex justify-end gap-2">
+            <app-button icon="edit" variant="info" [iconOnly]="true" (buttonClick)="openEditModal(patient)" />
+            <app-button icon="calendar_month" variant="success" [iconOnly]="true" (buttonClick)="onCreateAppointment(patient)" />
+            <app-button icon="delete" variant="danger" [iconOnly]="true" (buttonClick)="onDeletePatient(patient)" />
+          </div>
+        </ng-template>
       </app-table>
 
     } @else if (isLoading()) {

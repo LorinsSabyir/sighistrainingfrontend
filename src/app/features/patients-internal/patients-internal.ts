@@ -1,12 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { Table, TableColumn } from '../../shared/table/table';
+import { Table, TableColumn, TableCellDef  } from '../../shared/table/table';
 import { Patient, PatientsInternalService } from '../../core/services/patients-internal.service';
 import { FormFieldConfig, ModalForm } from '../../shared/modal-form/modal-form';
 import { Button } from "../../shared/button/button";
+import { SearchBar, SearchEvent } from '../../shared/search-bar/search-bar';
 
 @Component({
   selector: 'app-patients-internal',
-  imports: [Table, ModalForm, Button],
+  imports: [Table, ModalForm, Button, SearchBar, TableCellDef],
   templateUrl: './patients-internal.html',
   styleUrl: './patients-internal.css',
 })
@@ -49,8 +50,8 @@ export class PatientsInternal implements OnInit {
     });
   }
   
-  onUpdatePatient(pid: string, formData: Partial<Patient>) {
-    this.patientService.updatePatient(pid, formData).subscribe({
+  onUpdatePatient(id: number, formData: Partial<Patient>) {
+    this.patientService.updatePatient(id, formData).subscribe({
       next: (updatedPatient) => {
         console.log('Patient updated:', updatedPatient);
       },
@@ -60,6 +61,24 @@ export class PatientsInternal implements OnInit {
     });
   }
 
+  onDeletePatient(patient: Patient): void {
+    this.patientService.deletePatient(patient.id).subscribe({
+      next: () => {
+        this.patients.update(list =>
+          list.filter(p => p.id !== patient.id)
+        );
+      },
+      error: (err) => console.error('Delete failed:', err),
+    });
+  }
+  
+  onCreateAppointment(patient: Patient): void {
+    // TODO: not built yet — where should this navigate/open to?
+    console.log('Create appointment for', patient.pid);
+  }
+
+
+  // --------- Table ---------- 
   columns: TableColumn[] = [
 
     {
@@ -103,7 +122,8 @@ export class PatientsInternal implements OnInit {
 
     {
       header: 'Actions',
-      field: 'City'
+      field: 'actions',
+      align: 'right',
     }
 
   ];
@@ -168,7 +188,7 @@ export class PatientsInternal implements OnInit {
     const editing = this.editingPatient();
   
     if (editing) {
-      this.patientService.updatePatient(editing.pid!, formValue).subscribe({
+      this.patientService.updatePatient(editing.id, formValue).subscribe({
         next: (updatedPatient) => {
           this.patients.update((list) =>
             list.map((p) => (p.pid === updatedPatient.pid ? updatedPatient : p))
@@ -185,6 +205,29 @@ export class PatientsInternal implements OnInit {
         },
         error: (err) => console.error('Create failed:', err),
       });
+    }
+  }
+
+  // ---------- Search Bar ----------
+  onSearch(event: SearchEvent): void {
+    this.isLoading.set(true);
+    this.error.set(null);
+  
+    switch (event.type) {
+  
+      case 'pid':
+        this.patientService.getPatientByPid(event.pid!).subscribe({
+          next: (result) => { this.patients.set([result]); this.isLoading.set(false); },
+          error: (err) => { this.error.set('Patient not found.'); this.isLoading.set(false); console.error(err); },
+        });
+        break;
+  
+      case 'name':
+        this.patientService.searchPatient(event.lastName ?? '', event.firstName ?? '').subscribe({
+          next: (results) => { this.patients.set(results); this.isLoading.set(false); },
+          error: (err) => { this.error.set('Search failed.'); this.isLoading.set(false); console.error(err); },
+        });
+        break;
     }
   }
 

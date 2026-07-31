@@ -53,11 +53,20 @@ export class ModalForm {
   }
 
   onSubmit(): void {
+    console.log('Submit clicked');
+    console.log('Form valid:', this.form.valid);
+    console.log('Errors:', this.form.errors);
+    console.log(this.form.value);
+  
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+  
+      console.log(this.form.controls);
+  
       return;
     }
-
+  
+    console.log('Emitting...');
     this.submitted.emit(this.form.value);
   }
 

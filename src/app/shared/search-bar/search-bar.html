@@ -1,1 +1,60 @@
-<p>search-bar works!</p>
+<div class="flex flex-wrap items-end gap-2">
+  <div>
+    <label class="mb-1 block text-sm font-medium text-gray-700">Search by</label>
+    <select
+      class="rounded-md border border-gray-300 px-3 py-2 text-sm"
+      [ngModel]="searchType()"
+      (ngModelChange)="onSearchTypeChange($event)"
+    >
+      <option value="pid">Patient PID</option>
+      <option value="name">Name</option>
+    </select>
+  </div>
+
+  @switch (searchType()) {
+
+    @case ('pid') {
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">Patient PID</label>
+        <input
+          type="text"
+          class="rounded-md border border-gray-300 px-3 py-2 text-sm"
+          [ngModel]="pidValue()"
+          (ngModelChange)="pidValue.set($event)"
+          (keyup.enter)="onSubmit()"
+        />
+      </div>
+    }
+    
+    @case ('name') {
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">Last Name</label>
+        <input
+          type="text"
+          class="rounded-md border border-gray-300 px-3 py-2 text-sm"
+          [ngModel]="lastNameValue()"
+          (ngModelChange)="lastNameValue.set($event)"
+          (keyup.enter)="onSubmit()"
+        />
+      </div>
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700">First Name</label>
+        <input
+          type="text"
+          class="rounded-md border border-gray-300 px-3 py-2 text-sm"
+          [ngModel]="firstNameValue()"
+          (ngModelChange)="firstNameValue.set($event)"
+          (keyup.enter)="onSubmit()"
+        />
+      </div>
+    }
+  }
+
+  <button
+    type="button"
+    class="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm text-white hover:bg-[var(--color-primary-hover)]"
+    (click)="onSubmit()"
+  >
+    Search
+  </button>
+</div>

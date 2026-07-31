@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 // patient.model.ts
 export interface Patient {
+  id: number;
   pid?: string;
   date_registered?: string;
   name_first: string;
@@ -46,32 +47,27 @@ export class PatientsInternalService {
   getPatients(): Observable<Patient[]> {
     return this.http.get<Patient[]>(this.apiUrl);
   }
-  
+
   /**
    * GET /api/patient/{id}
    */
   getPatientsById(id: number): Observable<Patient[]> {
-    return this.http.get<Patient[]>(
-      `${this.apiUrl}/${id}`
-    );
+    return this.http.get<Patient[]>(`${this.apiUrl}/show/${id}`);
   }
 
   /**
    * GET /api/patient/{pid}
    */
   getPatientByPid(pid: string): Observable<Patient> {
-    return this.http.get<Patient>(`${this.apiUrl}/${pid}`);
+    return this.http.get<Patient>(`${this.apiUrl}/pid/${pid}`);
   }
 
   /**
    * GET /api/patient/name/{lastName}/{firstName}
    */
-  searchPatient(
-    lastName: string,
-    firstName: string
-  ): Observable<Patient[]> {
+  searchPatient(lastName: string, firstName: string): Observable<Patient[]> {
     return this.http.get<Patient[]>(
-      `${this.apiUrl}/name/${encodeURIComponent(lastName)}/${encodeURIComponent(firstName)}`
+      `${this.apiUrl}/name/${encodeURIComponent(lastName)}/${encodeURIComponent(firstName)}`,
     );
   }
 
@@ -85,12 +81,17 @@ export class PatientsInternalService {
 
   /**
    * Update an existing patient.
-   * Maps to: PUT /update/{pid}
+   * Maps to: PUT /update/{id}
    */
-  updatePatient(pid: string, patient: Partial<Patient>): Observable<Patient> {
-    return this.http.put<Patient>(`${this.apiUrl}/update/${pid}`, patient);
+  updatePatient(id: number, patient: Partial<Patient>): Observable<Patient> {
+    return this.http.put<Patient>(`${this.apiUrl}/update/${id}`, patient);
   }
 
-  
-  
+  /**
+   * Update an existing patient.
+   * Maps to: PUT /update/{id}
+   */
+  deletePatient(id: number): Observable<Patient> {
+    return this.http.delete<Patient>(`${this.apiUrl}/delete/${id}`);
+  }
 }

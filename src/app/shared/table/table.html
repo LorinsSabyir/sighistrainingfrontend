@@ -1,65 +1,46 @@
 <div class="table-container">
-
   <table>
-
     <thead>
       <tr>
-
         @for (column of columns(); track column.field) {
-
-          <th
-            [style.text-align]="column.align ?? 'left'"
-            [style.width]="column.width ?? null">
-
+          <th [style.text-align]="column.align ?? 'left'" [style.width]="column.width ?? null">
             {{ column.header }}
-
           </th>
-
         }
-
       </tr>
     </thead>
 
     <tbody>
-
       @if (rows().length === 0) {
-
         <tr>
-
-          <td [attr.colspan]="columns().length" class="empty-state">
-            No records found.
-          </td>
-
+          <td class="empty-state" [attr.colspan]="columns().length">No records found.</td>
         </tr>
-
       } @else {
-
         @for (row of rows(); track $index) {
-
           <tr>
-
             @for (column of columns(); track column.field) {
-
               <td [style.text-align]="column.align ?? 'left'">
-
-                <span [class]="column.class ?? ''">
-
-                  {{ row[column.field] }}
-
-                </span>
-
+                @if (template(column.field); as tpl) {
+                  <ng-container
+                    *ngTemplateOutlet="
+                      tpl;
+                      context: {
+                        $implicit: row,
+                        row: row,
+                      }
+                    "
+                  >
+                  </ng-container>
+                } @else {
+                  <span [class]="column.class ?? ''">
+                    {{ row[column.field] }}
+                  </span>
+                }
               </td>
-
             }
-
           </tr>
-
         }
-
       }
-
     </tbody>
-
   </table>
-
 </div>
