@@ -9,6 +9,7 @@
     <app-button button_text="Create new Patient" (buttonClick)="openCreateModal()"></app-button>
   </div>
 
+  <!-- Create & Edit Patient Details -->
   <app-modal-form
     [isOpen]="isModalOpen()"
     [title]="editingPatient() ? 'Edit Patient' : 'New Patient'"
@@ -18,6 +19,17 @@
     (closed)="isModalOpen.set(false)"
     (submitted)="onModalSubmit($event)"
   />
+
+  <!-- Create Patient Encounter -->
+  <app-modal-form
+    [isOpen]="isEncounterOpen()"
+    [title]="'New Encounter'"
+    [fields]="encounterFields"
+    [initialValue]="null"
+    [submitLabel]="'Create'"
+    (closed)="isEncounterOpen.set(false)"
+    (submitted)="onEncounterSubmit($event)"
+    />
 
   <div class="table-container">
     @if (patients().length) {
@@ -34,7 +46,7 @@
               icon="calendar_month"
               variant="success"
               [iconOnly]="true"
-              (buttonClick)="onCreateAppointment(patient)"
+              (buttonClick)="openCreateEncounterModal(patient)"
             />
             <app-button
               icon="delete"

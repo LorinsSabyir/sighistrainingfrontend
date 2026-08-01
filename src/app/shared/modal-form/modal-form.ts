@@ -6,7 +6,7 @@ import { Button } from "../button/button";
 export interface FormFieldConfig {
   key: string;
   label: string;
-  type?: 'text' | 'number' | 'date' | 'select' | 'textarea' | 'email' | 'tel';
+  type?: 'text' | 'number' | 'date' | 'select' | 'textarea' | 'email' | 'tel' | 'time';
   required?: boolean;
   maxLength?: number;
   options?: { label: string; value: string | number }[];

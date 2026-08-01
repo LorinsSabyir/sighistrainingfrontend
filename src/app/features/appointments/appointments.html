@@ -4,9 +4,7 @@
   <span>Manage patient encounters and appointments.</span>
 
   <div class="flex items-center justify-between mb-6">
-    <!-- <app-search-bar (searched)="onSearch($event)"> </app-search-bar> -->
-<!-- 
-    <app-button button_text="Create Appointment" (buttonClick)="openCreateModal()"> </app-button> -->
+    <app-search-bar (searched)="onSearch($event)"> </app-search-bar>
   </div>
 
   <app-modal-form
@@ -22,6 +20,21 @@
   <div class="table-container">
     @if (encounters().length) {
       <app-table [columns]="columns" [rows]="encounters()">
+        <!-- Patiend PID -->
+        <ng-template appTableCell="patient_id" let-encounter>
+          <div class="id_badge">
+            {{ encounter.patient?.pid ?? '—' }}
+          </div>
+        </ng-template>
+        
+        <!-- Ward ID -->
+        <ng-template appTableCell="ward_id" let-encounter>
+          <div class="id_badge">
+            {{ encounter.ward?.ward_id ?? '—' }}
+          </div>
+        </ng-template>
+
+        <!-- Actions -->
         <ng-template appTableCell="actions" let-encounter>
           <div class="flex justify-end gap-2">
             <app-button
