@@ -10,6 +10,7 @@ import { Patients } from './features/patients/patients';
 import { Reports } from './features/reports/reports';
 import { NotFound } from './features/not-found/not-found';
 import { PatientsInternal } from './features/patients-internal/patients-internal';
+import { Notifications } from './features/notifications/notifications';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,10 @@ export const routes: Routes = [
       {
         path: 'billing',
         component: Billing,
+      },
+      {
+        path: 'notifications',
+        component: Notifications,
       },
     ],
   },

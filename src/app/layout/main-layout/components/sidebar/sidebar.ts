@@ -14,7 +14,7 @@ export class Sidebar {
     { label: 'Dashboard', route: '/dashboard', icon: 'D' },
     { label: 'Patients Internal', route: '/patients internal', icon: 'PI' },
     { label: 'Patients External', route: '/patients', icon: 'PE' },
-    { label: 'Appointments', route: '/appointments', icon: 'A' },
+    { label: 'Encounters', route: '/appointments', icon: 'E' },
     { label: 'Reports', route: '/reports', icon: 'R' },
     { label: 'Billing', route: '/billing', icon: 'B' },
   ];
