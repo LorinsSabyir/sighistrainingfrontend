@@ -8,21 +8,27 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface AuthUser {
+  id: number;
+  personnel_id: string;
+
+  name_first: string;
+  name_last: string;
+
+  email: string;
+
+  role: 'admin' | 'doctor' | 'nurse';
+}
+
 export interface LoginResponse {
   accessToken: string;
-  user: {
-    email: string;
-    name?: string;
-  };
+  user: AuthUser;
 }
 
 interface ApiLoginResponse {
   accessToken?: string;
   token?: string;
-  user?: {
-    email?: string;
-    name?: string;
-  };
+  user?: AuthUser;
 }
 
 @Injectable({
@@ -38,12 +44,16 @@ export class AuthLayoutService {
   private readonly router = inject(Router);
 
   authState = signal({
-    user: null as LoginResponse['user'] | null,
+    user: this.getUser(),
     isLoading: false,
-    isAuthenticated: false,
+    isAuthenticated: !!this.getAccessToken(),
   });
 
   constructor(private readonly http: HttpClient) {}
+
+  // =====================================================
+  // Authentication
+  // =====================================================
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<ApiLoginResponse>(this.loginApiUrl, credentials).pipe(
@@ -54,14 +64,16 @@ export class AuthLayoutService {
           throw new Error('Login response did not include an access token.');
         }
 
+        if (!response.user) {
+          throw new Error('Login response did not include user information.');
+        }
+
         return {
           accessToken,
-          user: {
-            email: response.user?.email ?? credentials.email,
-            name: response.user?.name,
-          },
+          user: response.user,
         };
       }),
+
       tap((response) => {
         this.saveAccessToken(response.accessToken);
         this.saveUser(response.user);
@@ -72,27 +84,27 @@ export class AuthLayoutService {
           isAuthenticated: true,
         });
       }),
+
       catchError((error: unknown) => {
         if (error instanceof HttpErrorResponse) {
           return throwError(() => new Error(this.getLoginErrorMessage(error)));
         }
 
         return throwError(() => error);
-      }),
+      })
     );
   }
 
   logout(): void {
-    try {
-      this.http.post(this.logoutApiUrl, {}).subscribe({
-        next: () => this.clearLocalSession(),
-        error: () => this.clearLocalSession(),
-      });
-      
-    } catch (error) {
-      console.error('Error during logout:', error);
-    }
+    this.http.post(this.logoutApiUrl, {}).subscribe({
+      next: () => this.clearLocalSession(),
+      error: () => this.clearLocalSession(),
+    });
   }
+
+  // =====================================================
+  // Token
+  // =====================================================
 
   saveAccessToken(token: string): void {
     localStorage.setItem(this.accessTokenKey, token);
@@ -102,14 +114,56 @@ export class AuthLayoutService {
     return localStorage.getItem(this.accessTokenKey);
   }
 
-  saveUser(user: LoginResponse['user']): void {
+  // =====================================================
+  // User
+  // =====================================================
+
+  saveUser(user: AuthUser): void {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
-  getUser(): LoginResponse['user'] | null {
+  getUser(): AuthUser | null {
     const user = localStorage.getItem(this.USER_KEY);
-    return user ? JSON.parse(user) : null;
+    return user ? (JSON.parse(user) as AuthUser) : null;
   }
+
+  getFullName(): string {
+    const user = this.getUser();
+
+    if (!user) return '';
+
+    return `${user.name_first} ${user.name_last}`;
+  }
+
+  // =====================================================
+  // Role Helpers
+  // =====================================================
+
+  getRole(): AuthUser['role'] | null {
+    return this.getUser()?.role ?? null;
+  }
+
+  hasRole(...roles: AuthUser['role'][]): boolean {
+    const role = this.getRole();
+
+    return role !== null && roles.includes(role);
+  }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'admin';
+  }
+
+  isDoctor(): boolean {
+    return this.getRole() === 'doctor';
+  }
+
+  isNurse(): boolean {
+    return this.getRole() === 'nurse';
+  }
+
+  // =====================================================
+  // Session
+  // =====================================================
 
   private clearLocalSession(): void {
     localStorage.removeItem(this.accessTokenKey);
@@ -123,6 +177,10 @@ export class AuthLayoutService {
 
     void this.router.navigate(['/login']);
   }
+
+  // =====================================================
+  // Errors
+  // =====================================================
 
   private getLoginErrorMessage(error: HttpErrorResponse): string {
     if (error.status === 401 || error.status === 422) {
