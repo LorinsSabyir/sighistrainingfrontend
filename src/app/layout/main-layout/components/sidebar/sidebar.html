@@ -21,7 +21,7 @@
   <nav class="navigation flex-1 overflow-y-auto overflow-x-hidden pr-1">
     @for (item of navigationItems; track item.route) {
       <a
-        class="flex min-h-[46px] items-center gap-3 my-3 rounded-lg border border-transparent px-3 py-2.5"
+        class="flex min-h-[46px] items-center gap-3 my-1 rounded-lg border border-transparent px-3 py-2.5"
         [routerLink]="item.route"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"

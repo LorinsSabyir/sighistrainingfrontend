@@ -15,8 +15,14 @@ export class Sidebar {
     { label: 'Patients Internal', route: '/patients internal', icon: 'PI' },
     { label: 'Patients External', route: '/patients', icon: 'PE' },
     { label: 'Encounters', route: '/appointments', icon: 'E' },
-    { label: 'Reports', route: '/reports', icon: 'R' },
-    { label: 'Billing', route: '/billing', icon: 'B' },
+    
+    { label: 'Laboratory', route: '/laboratory', icon: 'L' },
+    { label: 'Radiology', route: '/radiology', icon: 'R' },
+    { label: 'Ward', route: '/ward', icon: 'W' },
+    { label: 'Department', route: '/department', icon: 'D' },
+
+    { label: 'Doctors', route: '/doctor', icon: 'D' },
+    { label: 'Nurse', route: '/nurse', icon: 'N' },
   ];
 
   constructor(private authService: AuthLayoutService) {}

@@ -11,6 +11,12 @@ import { Reports } from './features/reports/reports';
 import { NotFound } from './features/not-found/not-found';
 import { PatientsInternal } from './features/patients-internal/patients-internal';
 import { Notifications } from './features/notifications/notifications';
+import { Laboratory } from './features/laboratory/laboratory';
+import { Radiology } from './features/radiology/radiology';
+import { Ward } from './features/ward/ward';
+import { Department } from './features/department/department';
+import { Doctor } from './features/doctor/doctor';
+import { Nurse } from './features/nurse/nurse';
 
 export const routes: Routes = [
   {
@@ -57,17 +63,38 @@ export const routes: Routes = [
         component: Appointments,
       },
       {
-        path: 'reports',
-        component: Reports,
+        path: 'notifications',
+        component: Notifications,
       },
       {
-        path: 'billing',
-        component: Billing,
+        path: 'laboratory',
+        component: Laboratory,
+      },
+      {
+        path: 'radiology',
+        component: Radiology,
+      },
+      {
+        path: 'ward',
+        component: Ward,
+      },
+      {
+        path: 'department',
+        component: Department,
+      },
+      {
+        path: 'doctor',
+        component: Doctor,
+      },
+      {
+        path: 'nurse',
+        component: Nurse,
       },
       {
         path: 'notifications',
         component: Notifications,
       },
+
     ],
   },
   {
