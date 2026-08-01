@@ -1,5 +1,5 @@
 import { Component, OnInit, signal  } from '@angular/core';
-import { Patient, PatientsExternalApiService } from '../../core/services/patients-external-api.service';
+import { Patient, PatientsExternalApiService } from '../../core/services/external-api/patients-external-api.service';
 import { Table, TableColumn } from '../../shared/table/table';
 
 @Component({

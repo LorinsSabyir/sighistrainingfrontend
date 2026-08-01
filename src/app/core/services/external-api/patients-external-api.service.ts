@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-// patient.model.ts
 export interface Patient {
   pid?: string;
   date_registered?: string;
