@@ -1,5 +1,23 @@
 <section class="placeholder-page">
   <p>Department</p>
   <h1>Department workspace</h1>
-  <span>This is a placeholder page for department.</span>
+  <span>View SegService department records.</span>
+
+  <div class="table-container">
+    @if (departments().length) {
+      <app-table [columns]="columns" [rows]="departments()" />
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No departments found.</p>
+      </div>
+    }
+  </div>
 </section>

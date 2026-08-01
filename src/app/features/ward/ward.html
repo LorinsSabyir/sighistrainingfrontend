@@ -2,4 +2,23 @@
   <p>Ward</p>
   <h1>Ward workspace</h1>
   <span>This is a placeholder page for ward.</span>
+
+  <div class="table-container">
+    @if (wards().length) {
+      <app-table [columns]="columns" [rows]="wards()" />
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No wards found.</p>
+      </div>
+    }
+  </div>
+
 </section>

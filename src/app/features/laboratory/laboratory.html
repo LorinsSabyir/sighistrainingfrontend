@@ -2,4 +2,23 @@
   <p>Laboratory</p>
   <h1>Laboratory workspace</h1>
   <span>This is a placeholder page for laboratory.</span>
+
+  <div class="table-container">
+    @if (laboratories().length) {
+      <app-table [columns]="columns" [rows]="laboratories()" />
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No laboratories found.</p>
+      </div>
+    }
+  </div>
+
 </section>

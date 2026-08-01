@@ -22,6 +22,7 @@ import { Doctor } from './features/doctor/doctor';
 import { Nurse } from './features/nurse/nurse';
 
 import { NotFound } from './features/not-found/not-found';
+import { DoctorPatients } from './features/doctor-patients/doctor-patients';
 
 export const routes: Routes = [
   // =====================================================
@@ -81,11 +82,24 @@ export const routes: Routes = [
       },
 
       // ==========================================
+      // Admin + Doctor
+      // ==========================================
+
+      {
+        path: 'doctor-patients',
+        component: DoctorPatients,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin', 'doctor'],
+        },
+      },
+
+      // ==========================================
       // Admin + Nurse
       // ==========================================
 
       {
-        path: 'patients internal',
+        path: 'patients-internal',
         component: PatientsInternal,
         canActivate: [roleGuard],
         data: {

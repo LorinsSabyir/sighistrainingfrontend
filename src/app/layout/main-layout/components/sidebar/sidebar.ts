@@ -29,17 +29,18 @@ export class Sidebar {
 
     // Admin + Nurse
     {
-      label: 'Patients Internal',
-      route: '/patients internal',
-      icon: 'PI',
+      label: 'Patients',
+      route: '/patients-internal',
+      icon: 'P',
       roles: ['admin', 'nurse'],
     },
 
-    // Everyone
+    // Admin + Doctor
     {
-      label: 'Patients External',
-      route: '/patients',
-      icon: 'PE',
+      label: 'Doctor Patients',
+      route: '/doctor-patients',
+      icon: 'DP',
+      roles: ['admin', 'doctor'],
     },
 
     // Admin + Doctor + Nurse

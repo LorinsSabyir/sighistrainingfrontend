@@ -2,4 +2,23 @@
   <p>Nurse</p>
   <h1>Nurse workspace</h1>
   <span>This is a placeholder page for nurse.</span>
+
+  <div class="table-container">
+    @if (nurses().length) {
+      <app-table [columns]="columns" [rows]="nurses()" />
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No nurses found.</p>
+      </div>
+    }
+  </div>
+  
 </section>

@@ -22,7 +22,7 @@ export class LaboratoryService {
   /**
    * GET /api/seg/Laboratory
    */
-  getLaboratorys(): Observable<Laboratory[]> {
+  getLaboratories(): Observable<Laboratory[]> {
     return this.http.get<Laboratory[]>(this.apiUrl);
   }
 
