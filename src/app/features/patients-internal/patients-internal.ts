@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn, TableCellDef } from '../../shared/table/table';
 import { Patient, PatientsInternalService } from '../../core/services/patients-internal.service';
+import { UsersService, User } from '../../core/services/users.service';
 import { FormFieldConfig, ModalForm } from '../../shared/modal-form/modal-form';
 import { Button } from '../../shared/button/button';
 import { SearchBar } from '../../shared/search-bar/search-bar';
@@ -23,10 +24,12 @@ export class PatientsInternal implements OnInit {
   constructor(
     private readonly patientService: PatientsInternalService,
     private readonly encounterService: PatientsEncounterService,
+    private readonly usersService: UsersService,
   ) {}
 
   ngOnInit(): void {
     this.loadPatients();
+    this.loadDoctors();
   }
 
   loadPatients(): void {
@@ -76,6 +79,33 @@ export class PatientsInternal implements OnInit {
       error: (err) => console.error('Delete failed:', err),
     });
   }
+
+  // Load doctors for the encounter form dropdown
+  readonly doctors = signal<User[]>([]);
+
+  loadDoctors(): void {
+    this.usersService.getAllDoctors().subscribe({
+      next: (doctors) => {
+        this.doctors.set(doctors);
+
+        // Update the dropdown options
+        const doctorField = this.encounterFields.find(
+          field => field.key === 'doctor_id'
+        );
+
+        if (doctorField) {
+          doctorField.options = doctors
+            .filter(doctor => doctor.id !== undefined)
+            .map(doctor => ({
+              label: `${doctor.name_last}, ${doctor.name_first}`,
+              value: doctor.id as number,
+            }));
+        }
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
 
   // --------- Table ----------
   columns: TableColumn[] = [
@@ -324,6 +354,12 @@ export class PatientsInternal implements OnInit {
       key: 'discharge_datetime',
       label: 'Discharge Date/Time',
       type: 'date',
+    },
+    {
+      key: 'doctor_id',
+      label: 'Doctor',
+      type: 'select',
+      options: [],
     },
   ];
   

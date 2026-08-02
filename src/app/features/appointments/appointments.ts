@@ -31,6 +31,8 @@ export class Appointments implements OnInit {
 
     this.encounterService.getEncounters().subscribe({
       next: (encounters) => {
+        console.log(encounters);
+        console.log(encounters[0]);
         this.encounters.set(encounters);
         this.isLoading.set(false);
       },
@@ -105,8 +107,13 @@ export class Appointments implements OnInit {
       align: 'center',
     },
     {
-      header: 'Ward',
+      header: 'Ward ID',
       field: 'ward_id',
+      align: 'center',
+    },
+    {
+      header: 'Doctor ID',
+      field: 'doctor_id',
       align: 'center',
     },
     {
@@ -177,6 +184,11 @@ export class Appointments implements OnInit {
       label: 'Discharge Date/Time',
       type: 'date',
     },
+    // {
+    //   label: 'Doctor ID',
+    //   key: 'doctor_id',
+    //   type: 'number',
+    // },
   ];
 
   openEditModal(encounter: PatientEncounter): void {

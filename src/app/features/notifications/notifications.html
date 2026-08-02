@@ -3,34 +3,28 @@
   <h1>User Notifications</h1>
   <span>Manage notifications.</span>
 
-  @if (isLoading()) {
-
-    <div class="empty-state">
-      Loading notifications...
-    </div>
-
-  } @else if (error()) {
-
-    <div class="empty-state">
-      {{ error() }}
-    </div>
-
-  } @else if (notifications().length) {
-
-    <div class="space-y-3">
-      @for (notification of notifications(); track notification.id) {
-        <app-notification-card
-          [notification]="notification"
-          (clicked)="openNotification($event)"
-        />
-      }
-    </div>
-
-  } @else {
-
-    <div class="empty-state">
-      No notifications found.
-    </div>
-
-  }
+  <div class="mt-6">
+    @if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading notifications...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else if (notifications().length) {
+      <div class="space-y-3">
+        @for (notification of notifications(); track notification.id) {
+          <app-notification-card
+            [notification]="notification"
+            (clicked)="openNotification($event)"
+          />
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No notifications found.</p>
+      </div>
+    }
+  </div>
 </section>

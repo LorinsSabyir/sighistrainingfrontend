@@ -23,14 +23,21 @@
         <!-- Patiend PID -->
         <ng-template appTableCell="patient_id" let-encounter>
           <div class="id_badge">
-            {{ encounter.patient?.pid ?? '—' }}
+            {{ encounter.patient_id ?? '—' }}
           </div>
         </ng-template>
         
         <!-- Ward ID -->
         <ng-template appTableCell="ward_id" let-encounter>
           <div class="id_badge">
-            {{ encounter.ward?.ward_id ?? '—' }}
+            {{ encounter.ward_id ?? '—' }}
+          </div>
+        </ng-template>
+
+        <!-- Doctor ID -->
+        <ng-template appTableCell="doctor_id" let-encounter>
+          <div class="id_badge">
+            {{ encounter.doctor_id ?? '—' }}
           </div>
         </ng-template>
 

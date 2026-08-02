@@ -1,64 +1,45 @@
-import { Component, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NotificationsFields } from '../../core/services/notifications.service';
 
 @Component({
   selector: 'app-notification-card',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './notification-card.html',
   styleUrl: './notification-card.css',
 })
 export class NotificationCard {
+  @Input({ required: true }) notification!: NotificationsFields;
+  @Output() clicked = new EventEmitter<NotificationsFields>();
 
-  notification = input.required<NotificationsFields>();
+  private priorityClasses: Record<string, string> = {
+    urgent: 'border-l-[var(--color-danger)]',
+    high: 'border-l-[var(--color-warning)]',
+    normal: 'border-l-[var(--color-info)]',
+    low: 'border-l-[var(--color-secondary)]',
+  };
 
-  clicked = output<NotificationsFields>();
-
-  onClick() {
-    this.clicked.emit(this.notification());
+  get accentClass(): string {
+    return this.priorityClasses[this.notification.priority ?? 'normal'] ?? this.priorityClasses['normal'];
   }
 
-  priorityColor(priority?: string): string {
-    switch ((priority ?? '').toLowerCase()) {
-      case 'critical':
-        return 'bg-red-100 text-red-700';
-
-      case 'high':
-        return 'bg-orange-100 text-orange-700';
-
-      case 'medium':
-        return 'bg-yellow-100 text-yellow-700';
-
-      case 'low':
-        return 'bg-green-100 text-green-700';
-
-      default:
-        return 'bg-gray-100 text-gray-700';
-    }
+  get senderName(): string {
+    const sender = this.notification.sender;
+    if (!sender) return 'System';
+    return `${sender.name_first ?? ''} ${sender.name_last ?? ''}`.trim();
   }
 
-  icon(category?: string): string {
-    switch ((category ?? '').toLowerCase()) {
-      case 'patient':
-        return '👤';
+  get formattedTime(): string {
+    if (!this.notification.created_at) return '';
+    const date = new Date(this.notification.created_at);
+    return date.toLocaleString(undefined, {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+  }
 
-      case 'appointment':
-        return '📅';
-
-      case 'encounter':
-        return '🩺';
-
-      case 'billing':
-        return '💳';
-
-      case 'report':
-        return '📄';
-
-      case 'warning':
-        return '⚠️';
-
-      default:
-        return '🔔';
-    }
+  onClick(): void {
+    this.clicked.emit(this.notification);
   }
 }

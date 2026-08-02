@@ -1,15 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
+import { Router } from '@angular/router';
 import {
   NotificationsService,
   NotificationsFields,
 } from '../../core/services/notifications.service';
 import { NotificationCard } from '../../shared/notification-card/notification-card';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notifications',
-  imports: [MatListModule, NotificationCard],
+  imports: [NotificationCard],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css',
 })
@@ -51,7 +50,9 @@ export class Notifications implements OnInit {
 
     this.notificationsService.markAsRead(notification.id).subscribe({
       next: () => {
-        notification.is_read = true;
+        this.notifications.update((list) =>
+          list.map((n) => (n.id === notification.id ? { ...n, is_read: true } : n)),
+        );
 
         if (notification.action_url?.trim()) {
           this.router.navigateByUrl(notification.action_url);
@@ -60,7 +61,6 @@ export class Notifications implements OnInit {
       error: (err) => {
         console.error(err);
 
-        // Navigate anyway if marking as read fails
         if (notification.action_url?.trim()) {
           this.router.navigateByUrl(notification.action_url);
         }
