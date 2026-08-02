@@ -3,6 +3,10 @@
   <h1>Laboratory workspace</h1>
   <span>This is a placeholder page for laboratory.</span>
 
+  <div class="flex items-center justify-between gap-4 mb-6 py-3 flex-wrap">
+    <app-search-bar> </app-search-bar>
+  </div>
+  
   <div class="table-container">
     @if (laboratories().length) {
       <app-table [columns]="columns" [rows]="laboratories()" />

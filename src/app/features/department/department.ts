@@ -1,10 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn } from '../../shared/table/table';
 import { Department as DepartmentModel, DepartmentsService } from '../../core/services/external-api/departments-external.service';
+import { SearchBar } from "../../shared/search-bar/search-bar";
+import { Button } from "../../shared/button/button";
 
 @Component({
   selector: 'app-department',
-  imports: [Table],
+  imports: [Table, SearchBar, Button],
   templateUrl: './department.html',
   styleUrl: './department.css',
 })

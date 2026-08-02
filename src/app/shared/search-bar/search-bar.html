@@ -2,13 +2,14 @@
   <input
     type="text"
     placeholder="Search..."
+    class="search-bar__input w-1/2"
     [ngModel]="query()"
     (ngModelChange)="query.set($event)"
     (keyup.enter)="onSubmit()"
   />
 
   @if (query()) {
-    <app-button icon="closed" (buttonClick)="clear()"> </app-button>
+    <app-button icon="close" (buttonClick)="clear()"> </app-button>
   }
 
   <app-button icon="search" (buttonClick)="onSubmit()"> </app-button>

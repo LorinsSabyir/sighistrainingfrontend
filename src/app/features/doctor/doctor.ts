@@ -1,10 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn } from '../../shared/table/table';
 import { Doctor as DoctorModel, DoctorsService } from '../../core/services/external-api/doctors-external.service';
+import { Button } from "../../shared/button/button";
+import { SearchBar } from "../../shared/search-bar/search-bar";
 
 @Component({
   selector: 'app-doctor',
-  imports: [ Table ],
+  imports: [Table, Button, SearchBar],
   templateUrl: './doctor.html',
   styleUrl: './doctor.css',
 })

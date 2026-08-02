@@ -1,10 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn } from '../../shared/table/table';
 import { Nurse as NurseModel, NursesService } from '../../core/services/external-api/nurses-external.service';
+import { SearchBar } from "../../shared/search-bar/search-bar";
+import { Button } from "../../shared/button/button";
 
 @Component({
   selector: 'app-nurse',
-  imports: [ Table ],
+  imports: [Table, SearchBar, Button],
   templateUrl: './nurse.html',
   styleUrl: './nurse.css',
 })

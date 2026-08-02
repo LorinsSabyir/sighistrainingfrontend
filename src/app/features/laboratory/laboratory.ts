@@ -1,10 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn } from '../../shared/table/table';
 import { Laboratory as LaboratoryModel, LaboratoryService } from '../../core/services/external-api/laboratory-external.service';
+import { SearchBar } from "../../shared/search-bar/search-bar";
 
 @Component({
   selector: 'app-laboratory',
-  imports: [ Table ],
+  imports: [Table, SearchBar],
   templateUrl: './laboratory.html',
   styleUrl: './laboratory.css',
 })

@@ -1,10 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn } from '../../shared/table/table';
 import { Ward as WardModel, WardsService } from '../../core/services/external-api/wards-external.service';
+import { SearchBar } from "../../shared/search-bar/search-bar";
 
 @Component({
   selector: 'app-ward',
-  imports: [ Table ],
+  imports: [Table, SearchBar],
   templateUrl: './ward.html',
   styleUrl: './ward.css',
 })

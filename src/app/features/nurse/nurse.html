@@ -3,6 +3,12 @@
   <h1>Nurse workspace</h1>
   <span>This is a placeholder page for nurse.</span>
 
+  <div class="flex items-center justify-between gap-4 mb-6 py-3 flex-wrap">
+    <app-search-bar></app-search-bar>
+  
+    <app-button button_text="Create new Nurse"></app-button>
+  </div>
+
   <div class="table-container">
     @if (nurses().length) {
       <app-table [columns]="columns" [rows]="nurses()" />

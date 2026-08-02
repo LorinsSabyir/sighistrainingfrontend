@@ -4,10 +4,11 @@ import {
   PatientEncounter,
   PatientsEncounterService,
 } from '../../core/services/patients-encounter.service';
+import { SearchBar } from "../../shared/search-bar/search-bar";
 
 @Component({
   selector: 'app-doctor-patients',
-  imports: [Table, TableCellDef],
+  imports: [Table, TableCellDef, SearchBar],
   templateUrl: './doctor-patients.html',
   styleUrl: './doctor-patients.css',
 })

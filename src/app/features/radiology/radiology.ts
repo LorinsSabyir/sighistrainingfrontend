@@ -1,10 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Table, TableColumn } from '../../shared/table/table';
 import { Radiology as RadiologyModel, RadiologyService } from '../../core/services/external-api/radiology-external.service';
+import { SearchBar } from "../../shared/search-bar/search-bar";
 
 @Component({
   selector: 'app-radiology',
-  imports: [ Table ],
+  imports: [Table, SearchBar],
   templateUrl: './radiology.html',
   styleUrl: './radiology.css',
 })
