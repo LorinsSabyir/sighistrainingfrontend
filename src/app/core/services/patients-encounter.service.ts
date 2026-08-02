@@ -64,4 +64,8 @@ export class PatientsEncounterService {
       `${this.apiUrl}/search?q=${encodeURIComponent(query)}`,
     );
   }
+
+  getMyPatients(): Observable<PatientEncounter[]> {
+    return this.http.get<PatientEncounter[]>(`${this.apiUrl}/doctor`);
+  }
 }

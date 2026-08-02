@@ -2,4 +2,23 @@
   <p>Doctor</p>
   <h1>Doctor workspace</h1>
   <span>This is a placeholder page for doctor.</span>
+
+  <div class="table-container">
+    @if (doctors().length) {
+      <app-table [columns]="columns" [rows]="doctors()" />
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No doctors found.</p>
+      </div>
+    }
+  </div>
+  
 </section>

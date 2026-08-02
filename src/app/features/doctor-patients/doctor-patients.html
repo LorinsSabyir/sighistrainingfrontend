@@ -1,5 +1,27 @@
 <section class="placeholder-page">
-  <p>Doctor's Patients</p>
-  <h1>Doctor's Patients workspace</h1>
-  <span>This is a placeholder page for Doctor's Patients.</span>
+  <p>My Patients</p>
+  <h1>Assigned Patient Encounters</h1>
+  <span>Encounters currently assigned to you.</span>
+
+  <div class="table-container">
+    @if (encounters().length) {
+      <app-table [columns]="columns" [rows]="encounters()">
+        <ng-template appTableCell="patient_id" let-encounter>
+          {{ encounter.patient?.pid ?? '—' }}
+        </ng-template>
+      </app-table>
+    } @else if (isLoading()) {
+      <div class="empty-state">
+        <p>Loading...</p>
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <p>{{ error() }}</p>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>No assigned patients found.</p>
+      </div>
+    }
+  </div>
 </section>

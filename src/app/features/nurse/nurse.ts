@@ -8,7 +8,7 @@ import { Nurse as NurseModel, NursesService } from '../../core/services/external
   templateUrl: './nurse.html',
   styleUrl: './nurse.css',
 })
-export class Nurse {
+export class Nurse implements OnInit {
   readonly nurses = signal<NurseModel[]>([]);
   readonly isLoading = signal(false);
   readonly error = signal<string | null>(null);

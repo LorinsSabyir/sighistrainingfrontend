@@ -48,7 +48,7 @@ export class Sidebar {
       label: 'Encounters',
       route: '/appointments',
       icon: 'E',
-      roles: ['admin', 'doctor', 'nurse'],
+      roles: ['admin', 'nurse'],
     },
 
     // Everyone can view
